@@ -1,10 +1,10 @@
 [Desktop Entry]
 Version=1.0
 Type=Application
-Name=IDEA-Community
+Name=IDEA Community
 GenericName=IntelliJ IDEA Community Edition
-Exec=pycharm.sh %f
-Icon=Pycharm
+Exec=idea.sh %f
+Icon=Idea
 Comment=The IDE for Java and Kotlin enthusiasts
 Categories=Development;IDE;
 Terminal=false
