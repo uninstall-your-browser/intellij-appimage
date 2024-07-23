@@ -11,8 +11,6 @@ jobs:
   version:
     name: IDEA AppImage
     runs-on: ubuntu-20.04
-    env:
-      GITHUB_TOKEN: ${{ secrets.APPIMAGE_PUB }}
     steps:
       - uses: actions/checkout@v2
       - name: Build
@@ -24,20 +22,14 @@ jobs:
           version_bash: 'jq -r  .version'
           version_icon: 'idea.svg'
           version_directory: 'opt/idea'
-      - name: Upload artifact
+      - name: Create release
         if: ${{ env.APP_UPDATE_NEEDED == 'true' }}
-        uses: actions/upload-artifact@v1
-        with:
-          name: ${{ env.APP_SHORT_NAME }}.AppImage
-          path: 'dist'
-      - name: Release
+        run: gh release create ${{ env.APP_VERSION }} -t "${{ env.APP_NAME }} AppImage ${{ env.APP_VERSION }}"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Upload binaries
         if: ${{ env.APP_UPDATE_NEEDED == 'true' }}
-        uses: marvinpinto/action-automatic-releases@latest
-        with:
-          title: ${{ env.APP_NAME }} AppImage ${{ env.APP_VERSION }}
-          automatic_release_tag: latest
-          prerelease: false
-          files: |
-            dist/
-          repo_token: ${{ secrets.APPIMAGE_PUB }}
+        run: gh release upload ${{ env.APP_VERSION }} dist/* --clobber
+        env:
+          GH_TOKEN: ${{ github.token }}
 
