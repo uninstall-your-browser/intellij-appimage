@@ -2,7 +2,7 @@
 Version=1.0
 Type=Application
 Name=IntelliJ IDEA Community Edition
-Exec=idea.sh %f
+Exec=idea %f
 Icon=Idea
 Comment=The IDE for Java and Kotlin enthusiasts
 Categories=Development;IDE;
